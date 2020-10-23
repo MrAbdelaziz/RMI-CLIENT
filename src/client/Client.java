@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package client3;
+package client;
 
 import java.net.MalformedURLException;
 import java.rmi.Naming;
@@ -19,7 +19,7 @@ import operation.*;
  *
  * @author a
  */
-public class Client3 {
+public class Client {
 
     /**
      * @param args the command line arguments
@@ -57,11 +57,11 @@ public class Client3 {
         	System.out.println(pl.Palindrome("ala"));
         	
         } catch (NotBoundException ex) {
-            Logger.getLogger(Client3.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
         } catch (MalformedURLException ex) {
-            Logger.getLogger(Client3.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
         } catch (RemoteException ex) {
-            Logger.getLogger(Client3.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }
