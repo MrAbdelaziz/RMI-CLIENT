@@ -10,9 +10,15 @@ import java.rmi.Naming;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
+import java.util.Hashtable;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+
 import operation.*;
 
 /**
@@ -53,16 +59,28 @@ public class Client {
         	System.out.println(pr.Produit(2, 10));
         	*/
         	
-        	PalindromeInterface pl = (PalindromeInterface) Naming.lookup("rmi://localhost:1099/palindrome");
+        	/*
+        	 * RMI
+        	 * 		PalindromeInterface pl = (PalindromeInterface) Naming.lookup("rmi://localhost:1099/palindrome");
+        	*/
+        	
+        	//JNDI
+		        	final Hashtable<Object,Object> jndiProperties = new Hashtable<Object,Object>();
+		        	
+		        	jndiProperties.put(Context.INITIAL_CONTEXT_FACTORY,"com.sun.jndi.rmi.registry.RegistryContextFactory");
+		        	jndiProperties.put(Context.PROVIDER_URL, "rmi://localhost:1099");
+		        	
+		        	InitialContext ctx = new InitialContext(jndiProperties);
+		        	PalindromeInterface pl = (PalindromeInterface) ctx.lookup("palindrome");
+        	
         	System.out.println(pl.Palindrome("ala"));
         	
-        } catch (NotBoundException ex) {
-            Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (MalformedURLException ex) {
-            Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
         } catch (RemoteException ex) {
             Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        } catch (NamingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
     }
 
